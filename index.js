@@ -5,21 +5,13 @@ const questions = require('./questions')
 
 function generateMarkdown(data) {
     return `
-    
-  # ${data.title}
-  
-    ${data.description}
       
   ---
-  ## Contents
-  
-  1. [About](#about)
-  6. [Authors and acknowledgment](#authors%20and%20acknowledgment)
-  
-  ---
+  ${data.license}
   ## About
   
-    ${data.about}
+  
+  ${questions.badgeType(data.license)}
   
   ---
      
@@ -28,21 +20,12 @@ function generateMarkdown(data) {
   
   inquirer
     .prompt([
-        {
-            type: 'input',
-            name: 'description',
-            message:'what is your title?'
-        }
-        {
-            type: 'input',
-            name: 'title',
-            message:'what is your description?'
-        }
-        {
-            type: 'input',
-            name: 'about',
-            message:'what is your about?'
-        }
+      {
+        type:'list',
+        name:'license',
+        message:'Which license do you use for this project?',
+        choices:['GNU AGPLv3', 'GNU GPLv3', 'GNU LGPLv3', 'Mozilla', 'MIT', 'Apache']
+    },
     ])
     .then((data) => {
         const markdownContent = generateMarkdown(data);
